@@ -1,0 +1,8 @@
+<h1>Communication</h1>
+<div>
+  <input #name type="text" (keyup)="0"/>
+  <button (click)="onJonmoDiya(name.value)">Jonmo Diya</button>
+</div>
+<div id="chat-heads">
+  <app-usercomm *ngFor="let xontan of $hontans" [child]="xontan"></app-usercomm>
+</div>
