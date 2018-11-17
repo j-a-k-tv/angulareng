@@ -1,0 +1,16 @@
+.chat-box{
+    border: 1px solid grey;
+
+    .chat-title{
+
+        .chat-delete-icon{
+            float: right;
+        }
+    }
+
+
+    .chat-container > *{
+        width: 100%;
+    }
+}
+

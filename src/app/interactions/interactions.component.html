@@ -1,8 +1,10 @@
 <h1>Communication</h1>
 <div>
-  <input #name type="text" (keyup)="0"/>
-  <button (click)="onJonmoDiya(name.value)">Jonmo Diya</button>
+  <mat-form-field>
+    <input #name matInput placeholder="Name" [(ngModel)]="$name" type="text" (keyup)="0" (keyup.enter)="onJonmoDiya(name.value)">
+    <mat-icon matSuffix (click)="onJonmoDiya(name.value)" >person_add</mat-icon>
+  </mat-form-field>
 </div>
 <div id="chat-heads">
-  <app-usercomm *ngFor="let xontan of $hontans" [child]="xontan"></app-usercomm>
+  <app-usercomm *ngFor="let xontan of $hontans" [child]="xontan" [users]="$hontans" (deleteChatHead)="onDeleteChatHead($event)"></app-usercomm>
 </div>

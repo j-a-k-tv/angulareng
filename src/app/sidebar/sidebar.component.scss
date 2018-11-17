@@ -1,24 +1,38 @@
 nav {
     background: #2D2E2E;
     height: 100%;
-
     ul {
         list-style-type: none;
         padding: 0;
         margin: 0;
-
         li {
-
             a {
                 color: #fff;
-                padding: 20px;
-                display: block;
-            }
-
-            .activated {
-                background-color: #00a8ff;
+                padding: 25px;
+                display: flex;
+                transition: all .4s;
+                text-decoration: none;
+                &.activated {
+                    background-color: #00a8ff;
+                }
+                &.menu-activated {
+                    color: #00a8ff;
+                }
+                &:hover:not(.activated) {
+                    color: #00a8ff;
+                }
+                span {
+                    padding-left: 15px;
+                    align-self: center;
+                    transition: all 1s;
+                    display: none;
+                    opacity: 0;
+                    &.menu-name-visible {
+                        display: initial;
+                        opacity: 1;
+                    }
+                }
             }
         }
     }
-    
 }

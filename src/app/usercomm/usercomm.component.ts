@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-usercomm',
@@ -8,10 +8,25 @@ import { Component, OnInit, Input } from '@angular/core';
 export class UsercommComponent implements OnInit {
 
   @Input() child : object
+  @Input() users : Array<object>
+  @Output() deleteChatHead = new EventEmitter<object>();
+  $messages : Array<string>
+  $selectedUser : string
   
-  constructor() { }
+  constructor() { 
+    this.$messages = []
+    this.$selectedUser = ""
+  }
 
   ngOnInit() {
+  }
+
+  onSend(user:string, message: string) {
+    this.$messages.push(message)
+  }
+
+  onRemoveChat(){
+    this.deleteChatHead.emit(this.child)
   }
 
 }

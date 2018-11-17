@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router'
 import { Observable } from 'rxjs'
 import { filter } from 'rxjs/operators';
@@ -11,9 +11,14 @@ import { filter } from 'rxjs/operators';
 export class SidebarComponent implements OnInit {
 
   currentUrl: string;
+  menuExpanded: boolean = false;
 
   constructor(private router: Router) {
 
+  }
+
+  onMenuToogle(){
+    this.menuExpanded = !this.menuExpanded
   }
 
   ngOnInit() {

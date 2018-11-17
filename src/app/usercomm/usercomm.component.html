@@ -1,9 +1,26 @@
-<h2>{{ child.name }}</h2>
-<div>
-    <mat-form-field>
-        <input matInput placeholder="Amount" type="text" class="example-right-align">
-        <!-- <span matPrefix>$&nbsp;</span>
-        <span matSuffix>.00</span> -->
-        <mat-icon matSuffix>visibility</mat-icon>
-    </mat-form-field>
+<div class="chat-box">
+    <div>
+        <mat-card class="chat-title">{{child.name | uppercase}}
+            <mat-icon class="chat-delete-icon" matSuffix (click)="onRemoveChat()">delete</mat-icon>
+        </mat-card>
+
+    </div>
+
+    <div class="chat-container">
+        <mat-list role="list">
+            <mat-list-item *ngFor="let message of $messages" role="listitem">{{message}}</mat-list-item>
+        </mat-list>
+        <mat-form-field>
+            <textarea #message matInput placeholder="Message" type="text" (keyup)="0"></textarea>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select [(value)]="$selectedUser" placeholder="User">
+                <mat-option *ngFor="let user of users" [value]="user.name">
+                    {{user.name}}
+                </mat-option>
+            </mat-select>
+            <mat-icon matPrefix>person</mat-icon>
+            <mat-icon matSuffix (click)="onSend($selectedUser, message.value)">send</mat-icon>
+        </mat-form-field>
+    </div>
 </div>

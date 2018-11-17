@@ -1,18 +1,26 @@
 <nav>
   <ul>
     <li>
+      <a href="javascript:void(0)" [class.menu-activated]="menuExpanded" (click)="onMenuToogle()">
+        <i class="material-icons">menu</i>
+      </a>
+    </li>
+    <li>
       <a routerLink="" [class.activated]="currentUrl == '/'">
         <i class="material-icons">supervised_user_circle</i>
+        <span [class.menu-name-visible]="menuExpanded">Users</span>
       </a>
     </li>
     <li>
       <a routerLink="posts" [class.activated]="currentUrl == '/posts'">
         <i class="material-icons">message</i>
+        <span [class.menu-name-visible]="menuExpanded">Messages</span>
       </a>
     </li>
     <li>
       <a routerLink="interactions" [class.activated]="currentUrl == '/interactions'">
         <i class="material-icons">info</i>
+        <span [class.menu-name-visible]="menuExpanded">Interactions</span>
       </a>
     </li>
   </ul>
