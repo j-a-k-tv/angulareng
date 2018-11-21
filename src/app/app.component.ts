@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs'
 
 @Component({
@@ -6,6 +6,9 @@ import { Observable } from 'rxjs'
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'fng';
+  ngOnInit() {
+    
+  }
 }

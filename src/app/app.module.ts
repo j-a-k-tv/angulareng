@@ -5,16 +5,6 @@ import { CommonModule } from '@angular/common'
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
-import { UsersComponent } from './users/users.component';
-import { DetailsComponent } from './details/details.component';
-import { PostsComponent } from './posts/posts.component';
-import { InteractionsComponent } from './interactions/interactions.component';
-import { UsercommComponent } from './usercomm/usercomm.component'
-
-
 import {
   MatButtonModule,
   MatAutocompleteModule,
@@ -47,6 +37,18 @@ import {
   MatTooltipModule
 } from '@angular/material';
 
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { UsersComponent } from './users/users.component';
+import { DetailsComponent } from './details/details.component';
+import { PostsComponent } from './posts/posts.component';
+import { InteractionsComponent } from './interactions/interactions.component';
+import { UsercommComponent } from './usercomm/usercomm.component'
+import { CalculatorComponent } from './calculator/calculator.component';
+import { TopbarComponent } from './topbar/topbar.component';
+import { RevealbuttoncontainerDirective } from './revealbuttoncontainer.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +57,10 @@ import {
     DetailsComponent,
     PostsComponent,
     InteractionsComponent,
-    UsercommComponent
+    UsercommComponent,
+    CalculatorComponent,
+    TopbarComponent,
+    RevealbuttoncontainerDirective
   ],
   imports: [
     CommonModule,
@@ -97,4 +102,6 @@ import {
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+   
+}

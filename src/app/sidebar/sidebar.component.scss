@@ -1,38 +1,41 @@
+:host {
+    grid-row: 2/3;
+    grid-column: 1/2
+}
+
 nav {
-    background: #2D2E2E;
     height: 100%;
+    background-color: #333;
     ul {
         list-style-type: none;
-        padding: 0;
         margin: 0;
+        padding: 0;
         li {
             a {
-                color: #fff;
-                padding: 25px;
+                padding: 12px;
                 display: flex;
-                transition: all .4s;
-                text-decoration: none;
-                &.activated {
-                    background-color: #00a8ff;
-                }
-                &.menu-activated {
-                    color: #00a8ff;
-                }
-                &:hover:not(.activated) {
-                    color: #00a8ff;
-                }
-                span {
+                line-height: initial;
+                min-width: initial;
+                display: flex;
+                color: #fff;
+                div {
                     padding-left: 15px;
                     align-self: center;
-                    transition: all 1s;
                     display: none;
-                    opacity: 0;
+                    overflow: hidden;
                     &.menu-name-visible {
-                        display: initial;
-                        opacity: 1;
+                        display: block;
                     }
                 }
             }
+            &.activated {
+                background-color: #fff;
+            }
         }
     }
+}
+
+.reveal-button-holder {
+    padding: 1px;
+    margin: 1px;
 }

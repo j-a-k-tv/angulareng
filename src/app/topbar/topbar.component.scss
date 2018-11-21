@@ -1,0 +1,19 @@
+// @import "../../../node_modules/materialize-css/sass/components/color-variables";
+// @import "../../../node_modules/materialize-css/sass/components/color-classes";
+
+// // Variables;
+// @import "../../../node_modules/materialize-css/sass/components/variables";
+
+// // Reset
+// @import "../../../node_modules/materialize-css/sass/components/normalize";
+// @import "../../../node_modules/materialize-css/sass/components/global";
+
+// @import "../../../node_modules/materialize-css/sass/components/navbar";
+
+@import "../materializecss-base.scss";
+@import "../../../node_modules/materialize-css/sass/components/navbar";
+
+:host{
+    grid-row: 1/2;
+    grid-column: 1/3;
+}

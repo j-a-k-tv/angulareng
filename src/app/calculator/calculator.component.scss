@@ -1,0 +1,134 @@
+#app-calculator {
+    display: grid;
+    grid-template-columns: 4fr 2fr;
+    grid-gap: 15px;
+    height: 100%;
+}
+
+#physical-calculator {
+    display: grid;
+    grid-template-rows: 5fr 14fr;
+    grid-template-areas: 
+        "display"
+        "buttons";
+    background-color: #333;
+    color: #ffffff;
+    height: 100%;
+}
+
+#display-holder{
+    grid-area: display;
+    display: grid;
+    grid-template-rows: auto auto;
+    .display-row-1{
+        display: flex;
+        border: 0;
+        color: #ffffff;
+        background: transparent;
+        width: 100%;
+        height: 100%;
+        font-size: 16px;
+        padding: .5rem;
+        box-sizing: border-box;
+        justify-content: flex-end;
+        .display-text{
+            align-self: center;
+        }
+    }
+    .display-row-2{
+        display: flex;
+        border: 0;
+        color: #ffffff;
+        background: transparent;
+        width: 100%;
+        height: 100%;
+        font-size: 36px;
+        padding: .5rem;
+        box-sizing: border-box;
+        justify-content: flex-end;
+        .display-text{
+            align-self: center;
+        }
+    }
+
+    
+}
+
+#buttons {
+    display: grid;
+    grid-area: buttons;
+    grid-template-areas: 
+        "clearone clear negate delete"
+        "perc divison mul minus" 
+        "seven eight nine plus" 
+        "four five six plus" 
+        "one two three equals" 
+        "zero zero dot equals";
+
+    button {
+        font-size: 1.5rem;
+    }
+    .clearone {
+        grid-area: clearone;
+    }
+    .clear {
+        grid-area: clear;
+    }
+    .negate {
+        grid-area: negate;
+    }
+    .delete {
+        grid-area: delete;
+    }
+    .perc {
+        grid-area: perc;
+    }
+    .divison {
+        grid-area: divison;
+    }
+    .mul {
+        grid-area: mul;
+    }
+    .minus {
+        grid-area: minus;
+    }
+    .plus {
+        grid-area: plus;
+    }
+    .equals {
+        grid-area: equals;
+    }
+    .one {
+        grid-area: "one";
+    }
+    .two {
+        grid-area: two;
+    }
+    .three {
+        grid-area: three;
+    }
+    .four {
+        grid-area: four;
+    }
+    .five {
+        grid-area: five;
+    }
+    .six {
+        grid-area: six;
+    }
+    .seven {
+        grid-area: seven;
+    }
+    .eight {
+        grid-area: eight;
+    }
+    .nine {
+        grid-area: nine;
+    }
+    .zero {
+        grid-area: zero;
+    }
+    .dot {
+        grid-area: dot;
+    }
+}

@@ -1,19 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
 
-body {
+html, body {
     margin: 0;
     background: #F2F2F2;
     font-family: 'Montserrat', sans-serif;
     height: 100vh;
 }
 
+.fas {
+    font-size: 24px;
+}
+
 #container {
     display: grid;
     grid-template-columns: min-content auto;
+    grid-template-rows: min-content auto;
     height: 100%;
     overflow: hidden;
     #content {
-        padding: 30px 50px;
+        padding: 0;
         overflow-y: auto;
         ul {
             list-style-type: none;
@@ -45,12 +50,26 @@ body {
     }
 }
 
-html,
-body {
-    height: 100%;
+.reveal-button-holder {
+    margin: 1px;
+    padding: 1px;
+    transition: background-color 400ms ease-in-out;
 }
 
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+.reveal-button-holder .reveal-button {
+    font-weight: lighter;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background-color: #333;
+    color: #fff;
+    transition: all 400ms ease;
+}
+
+.reveal-button-holder:hover{
+    background-color: rgba(255,255,255,.6) !important;
+}
+
+app-sidebar .mat-button-wrapper {
+    display: flex !important;
 }
