@@ -27,10 +27,11 @@ nav {
                         display: block;
                     }
                 }
+                &.activated {
+                    background-color: #6f6f6f;
+                }
             }
-            &.activated {
-                background-color: #fff;
-            }
+            
         }
     }
 }

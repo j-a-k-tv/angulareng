@@ -5,27 +5,27 @@
         <i class="material-icons">menu</i>
       </a>
     </li>
-    <li class="reveal-button-holder" [class.activated]="currentUrl == '/'">
-      <a routerLink="" mat-button class="reveal-button">
+    <li class="reveal-button-holder">
+      <a routerLink="" mat-button class="reveal-button" [class.activated]="currentUrl == '/'">
         <mat-icon>supervised_user_circle</mat-icon>
         <div [class.menu-name-visible]="menuExpanded">Users</div>
       </a>
     </li>
-    <li class="reveal-button-holder" [class.activated]="currentUrl == '/posts'">
-      <a routerLink="posts" mat-button class="reveal-button">
+    <li class="reveal-button-holder">
+      <a routerLink="posts" mat-button class="reveal-button" [class.activated]="currentUrl == '/posts'">
         <mat-icon>message</mat-icon>
         <div [class.menu-name-visible]="menuExpanded">Messages</div>
       </a>
     </li>
-    <li class="reveal-button-holder" [class.activated]="currentUrl == '/interactions'">
-      <a routerLink="interactions" mat-button class="reveal-button">
+    <li class="reveal-button-holder">
+      <a routerLink="interactions" mat-button class="reveal-button" [class.activated]="currentUrl == '/interactions'">
         <mat-icon>info</mat-icon>
         <div [class.menu-name-visible]="menuExpanded">Interactions</div>
       </a>
     </li>
-    <li class="reveal-button-holder" [class.activated]="currentUrl == '/calculator'">
-      <a routerLink="calculator" mat-button class="reveal-button">
-          <mat-icon>dialpad</mat-icon>
+    <li class="reveal-button-holder">
+      <a routerLink="calculator" mat-button class="reveal-button" [class.activated]="currentUrl == '/calculator'">
+        <mat-icon>dialpad</mat-icon>
         <div [class.menu-name-visible]="menuExpanded">Calculator</div>
       </a>
     </li>

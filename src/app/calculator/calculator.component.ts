@@ -17,19 +17,17 @@ export class CalculatorComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.calService.onAccumulatorChanged.subscribe({
-      //next: ((value) => this.$result = value).bind(this)
-      next: function (value: number) {
-        console.log("reg a:", value);
-        this.$result = value.toString();
-      }.bind(this)
+    this.calService.onResultChanged.subscribe({
+      next: ((value) => this.$result = value == undefined ? "0" : value.toString()).bind(this)
     });
   }
 
   onKeyInput(_input) {
-
     switch (_input) {
-      case 'CE': this.calService.accumulator = 0;
+      case 'CE': {
+        this.calService.setValue(0);
+        this.$result = "0";
+      }
         break;
       case 'C': {
         this.calService.reset();
@@ -39,38 +37,37 @@ export class CalculatorComponent implements OnInit {
       case 'backspace': {
         var inpLen = this.$result.length;
         this.$result = inpLen == 1 ? '0' : this.$result.substring(0, inpLen - 1);
+        this.calService.setValue(Number(this.$result));
         break;
       }
     }
-
   }
 
   onOperation(_input) {
     this.startNewNo = true;
-    this.calService.operator = _input;
-
     switch (_input) {
       case 'plus': {
-        this.$operation += this.$result + ' ' + '+' + ' ';
+        this.$operation += this.$result + ' ' + '+' + ' '
         break;
       }
       case 'minus': {
-        this.$operation += this.$result + ' ' + '-' + ' ';
+        this.$operation += this.$result + ' ' + '-' + ' '
         break;
       }
       case 'mul': {
-        this.$operation += this.$result + ' ' + '*' + ' ';
+        this.$operation += this.$result + ' ' + '*' + ' '
         break;
       }
       case 'div': {
-        this.$operation += this.$result + ' ' + '/' + ' ';
+        this.$operation += this.$result + ' ' + '/' + ' '
         break;
       }
       case 'equals': {
-        this.$operation = '';
+        this.$operation = ''
         break;
       }
     }
+    this.calService.operate(_input);
   }
 
   onNumInput(_input: string) {
@@ -89,13 +86,13 @@ export class CalculatorComponent implements OnInit {
           this.$result = this.$result.substring(1, this.$result.length)
         else
           this.$result = '-' + this.$result;
-        this.calService.accumulator = Number(this.$result);
+        this.calService.setValue(Number(this.$result));
         break;
       }
 
       default: {
         this.$result = this.$result == '0' ? _input : this.$result + _input;
-        this.calService.accumulator = Number(this.$result);
+        this.calService.setValue(Number(this.$result));
       }
     }
 

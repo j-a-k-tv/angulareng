@@ -19,7 +19,8 @@
 #display-holder{
     grid-area: display;
     display: grid;
-    grid-template-rows: auto auto;
+    grid-template-rows: 1fr 2fr;
+    background-color: #242424;
     .display-row-1{
         display: flex;
         border: 0;
@@ -64,6 +65,10 @@
         "four five six plus" 
         "one two three equals" 
         "zero zero dot equals";
+
+    .numeric-button{
+        background-color: #242424;
+    }
 
     button {
         font-size: 1.5rem;
