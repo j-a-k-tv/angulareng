@@ -19,7 +19,7 @@ export class CalculatorComponent implements OnInit {
   ngOnInit() {
     this.calService.onAccumulatorChanged.subscribe({
       //next: ((value) => this.$result = value).bind(this)
-      next: function (value : number) {
+      next: function (value: number) {
         console.log("reg a:", value);
         this.$result = value.toString();
       }.bind(this)
@@ -73,12 +73,10 @@ export class CalculatorComponent implements OnInit {
     }
   }
 
-  onNumInput(_input : string) {
+  onNumInput(_input: string) {
 
     if (this.startNewNo && _input != "negate")
       this.$result = "0";
-
-    console.log("type of result: ", typeof(this.$result));
 
     switch (_input) {
       case ".": {
@@ -87,25 +85,22 @@ export class CalculatorComponent implements OnInit {
         break;
       }
       case "negate": {
-        if (this.$result.indexOf('-') >= 0){
-          console.log("here")
+        if (this.$result.indexOf('-') >= 0)
           this.$result = this.$result.substring(1, this.$result.length)
-        }
         else
-        {
-          console.log("there")
           this.$result = '-' + this.$result;
-        }
+        this.calService.accumulator = Number(this.$result);
         break;
       }
 
       default: {
         this.$result = this.$result == '0' ? _input : this.$result + _input;
+        this.calService.accumulator = Number(this.$result);
       }
     }
 
     console.log("result:", this.$result);
     this.startNewNo = false;
-    this.calService.accumulator = Number(this.$result);
+
   }
 }

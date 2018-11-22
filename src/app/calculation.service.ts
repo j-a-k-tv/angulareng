@@ -20,7 +20,6 @@ export class CalculationService {
     return this._regB;
   }
   private set regB(value: number) {
-    
     this._regB = value;
     console.log("reg b :", this._regB);
   }
@@ -30,15 +29,6 @@ export class CalculationService {
     return this._operator;
   }
   public set operator(value: string) {
-    
-
-    // switch(value){
-    //   case 'negate':{
-    //     this.accumulator *= -1;
-    //     return;
-    //   }
-    // }
-
     var prevOperator = this._operator;
 
     if (value != "equals") {
@@ -65,7 +55,6 @@ export class CalculationService {
           this.accumulator = this.accumulator / this.regB;
           break;
         }
-        
       }
     }
   }
@@ -83,5 +72,5 @@ export class CalculationService {
     this.accumulator = 0;
     this.regB = 0;
     this._operator = undefined;
-  }
+  }  
 }
