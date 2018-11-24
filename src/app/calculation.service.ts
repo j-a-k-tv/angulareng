@@ -30,8 +30,16 @@ export class CalculationService {
     this._operator = value;
   }
 
+  private _useRegB = false;
+  private get useRegB() {
+    return this._useRegB;
+  }
+  private set useRegB(value) {
+    this._useRegB = value;
+  }
+
   public onResultChanged: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  private newNo$ = false;
+
 
   constructor() {
     this.reset();
@@ -41,13 +49,16 @@ export class CalculationService {
 
     this.regB = undefined;
     this.operator = undefined;
-    this.newNo$ = false;
+    this.useRegB = false;
     this.accumulator = 0;
 
     this.onResultChanged.next(this.accumulator);
   }
 
   calculate(a: number, b: number, op: string) {
+    a = a || 0;
+    b = b || 0;
+
     switch (op) {
       case 'plus': {
         return a + b;
@@ -70,48 +81,55 @@ export class CalculationService {
 
   public setValue(value: number) {
 
-    if (this.newNo$)
+    if (this.useRegB)
       this.regB = value;
     else
       this.accumulator = value;
 
   }
 
-  public operate(value: string) {
-    if (value != "equals") {
-
-      if (this.regB == undefined || this.newNo$ == false) {
-        this.operator = value;
+  public operate(operator: string) {
+    switch (operator) {
+      case "equals": {
+        if (this.operator != undefined) {
+          if (this.regB == undefined)
+            this.regB = this.accumulator;
+          this.accumulator = this.calculate(this.accumulator, this.regB, this.operator);
+          this.useRegB = false;
+        }
+        this.onResultChanged.next(this.accumulator);
+        break;
       }
-      else {
-        //operate reg a and b with prev operator, 
-        //store in accumulator
-        //set reg b to undefined, 
-        //store current operator, 
-        //set new no = true
-        if (value == "perc") {
-          this.regB = this.calculate(this.accumulator, this.regB, value);
-          this.onResultChanged.next(this.regB);
+      case "perc": {
+        if (this.regB == undefined) {
+          if (this.operator != undefined) {
+            this.regB = this.calculate(this.accumulator, this.accumulator, operator);
+            this.onResultChanged.next(this.regB);
+          }
+          else {
+            this.accumulator = this.calculate(this.accumulator, 0, operator);
+            this.onResultChanged.next(this.accumulator);
+          }
         }
         else {
-          this.accumulator = this.calculate(this.accumulator, this.regB, this.operator);
-          this.regB = undefined;
-          this.operator = value;
-          this.onResultChanged.next(this.accumulator);
+          this.regB = this.calculate(this.accumulator, this.regB, operator);
+          this.onResultChanged.next(this.regB);
         }
+        break;
       }
+      default: {
+        var prevOp = this.operator;
+        this.operator = operator;
 
-      this.newNo$ = true;
-    }
-    else {
-      //operate reg a and b with prev operator, 
-      //store in accumulator
-      //set new no = false
-      if (this.regB == undefined) this.regB = this.accumulator;
-
-      this.accumulator = this.calculate(this.accumulator, this.regB, this.operator);      
-      this.newNo$ = false;
-      this.onResultChanged.next(this.accumulator);
+        if (this.regB == undefined || this.useRegB == false) {
+          this.useRegB = true;
+          return;
+        }
+        this.useRegB = true;
+        this.accumulator = this.calculate(this.accumulator, this.regB, prevOp);
+        this.regB = undefined;
+        this.onResultChanged.next(this.accumulator);
+      }
     }
   }
 }

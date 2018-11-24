@@ -1,6 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { CalculationService } from '../calculation.service';
 
+export class CalInput {
+  constructor(public value: string, public type: string) {
+
+  }
+}
+
+export class HistoryItem {
+  constructor(public calculator: string, public operations: string, public result: string) {
+    this.operations += " =";
+  }
+}
+
 @Component({
   selector: 'app-calculator',
   templateUrl: './calculator.component.html',
@@ -8,9 +20,39 @@ import { CalculationService } from '../calculation.service';
 })
 export class CalculatorComponent implements OnInit {
 
-  $operation: string = '';
-  $result: string = '0';
-  startNewNo: boolean = false;
+  public $activeCalculator = "Standard";
+  public $operation: string = '';
+  public $result: string = '0';
+  private startNewNo: boolean = false;
+  private operationsArr: CalInput[] = [];
+  public $history: HistoryItem[] = [];
+  private operators: object = {
+    "plus": "+",
+    "minus": "-",
+    "div": "÷",
+    "mul": "*",
+  }
+  public calculators: string[] = [
+    "Standard",
+    "Scientific",
+    "Programmer",
+    "Date Calculation"
+  ];
+  public converters: string[] = [
+    "Currency",
+    "Volume",
+    "Length",
+    "Weight and Mass",
+    "Temperature",
+    "Energy",
+    "Area",
+    "Speed",
+    "Time",
+    "Power",
+    "Data",
+    "Pressure",
+    "Angle"
+  ];
 
   constructor(private calService: CalculationService) {
 
@@ -18,60 +60,81 @@ export class CalculatorComponent implements OnInit {
 
   ngOnInit() {
     this.calService.onResultChanged.subscribe({
-      next: ((value) => this.$result = value == undefined ? "0" : value.toString()).bind(this)
+      next: ((value) => this.$result = value.toString()).bind(this)
     });
   }
 
-  onKeyInput(_input) {
-    switch (_input) {
-      case 'CE': {
-        this.calService.setValue(0);
-        this.$result = "0";
-      }
-        break;
-      case 'C': {
-        this.calService.reset();
-        this.$operation = '';
-        break;
-      }
-      case 'backspace': {
-        var inpLen = this.$result.length;
-        this.$result = inpLen == 1 ? '0' : this.$result.substring(0, inpLen - 1);
-        this.calService.setValue(Number(this.$result));
-        break;
-      }
-    }
+  deleteHistory() {
+    this.$history = [];
+  }
+
+  
+
+  addOperation(value: string, type: string) {
+    var lastInp = this.operationsArr.length ? this.operationsArr[this.operationsArr.length - 1] : undefined;
+    var newInp = new CalInput(value, type)
+    if (lastInp != undefined && lastInp.type == type)
+      this.operationsArr[this.operationsArr.length - 1] = newInp
+    else
+      this.operationsArr.push(newInp)
+  }
+
+  hasOperations(){
+    return this.operationsArr.length > 0;
+  }
+
+  clearOperations() {
+    this.operationsArr = [];
+  }
+
+  getOperations() {
+    return this.operationsArr.map(r => r.value).join(" ");
+  }
+
+  displayOperation() {
+    this.$operation = this.getOperations();
   }
 
   onOperation(_input) {
+    this.calService.operate(_input);
     this.startNewNo = true;
+
     switch (_input) {
-      case 'plus': {
-        this.$operation += this.$result + ' ' + '+' + ' '
-        break;
-      }
-      case 'minus': {
-        this.$operation += this.$result + ' ' + '-' + ' '
-        break;
-      }
-      case 'mul': {
-        this.$operation += this.$result + ' ' + '*' + ' '
-        break;
-      }
+      case 'plus':
+      case 'minus':
+      case 'mul':
       case 'div': {
-        this.$operation += this.$result + ' ' + '/' + ' '
+        if (!this.hasOperations())
+          this.addOperation(this.$result, "number");
+        this.addOperation(this.operators[_input] as string, "operator");
+        break;
+      }
+      case 'perc': {
+        this.addOperation(this.$result, "number");
         break;
       }
       case 'equals': {
-        this.$operation = ''
+        this.$history.push(new HistoryItem(this.$activeCalculator, this.getOperations(), this.$result))
+        this.clearOperations();
         break;
       }
     }
-    this.calService.operate(_input);
+
+    this.displayOperation();
+  }
+
+  onKeyInput(_input) {
+    switch (_input) {           
+      case 'C': {
+        this.calService.reset();
+        this.clearOperations();
+        this.displayOperation();
+        break;
+      }      
+    }
   }
 
   onNumInput(_input: string) {
-
     if (this.startNewNo && _input != "negate")
       this.$result = "0";
 
@@ -82,22 +145,30 @@ export class CalculatorComponent implements OnInit {
         break;
       }
       case "negate": {
-        if (this.$result.indexOf('-') >= 0)
-          this.$result = this.$result.substring(1, this.$result.length)
-        else
-          this.$result = '-' + this.$result;
-        this.calService.setValue(Number(this.$result));
+        var num = Number(this.$result);
+        num *= -1;
+        this.$result = num.toString();
         break;
       }
-
+      case 'backspace': {
+        var inpLen = this.$result.length;
+        if (inpLen > 0)
+          this.$result = this.$result.substring(0, inpLen - 1);
+        if (isNaN(this.$result as any) || this.$result == "")
+          this.$result = "0";
+        break;
+      }
+      case 'CE': {
+        this.$result = "0";
+        break;
+      }   
       default: {
         this.$result = this.$result == '0' ? _input : this.$result + _input;
-        this.calService.setValue(Number(this.$result));
       }
     }
 
-    console.log("result:", this.$result);
+    this.addOperation(this.$result, "number");
     this.startNewNo = false;
-
+    this.calService.setValue(Number(this.$result));
   }
 }

@@ -1,27 +1,77 @@
 <div id="app-calculator">
-  <div></div>
+  <div id="calculator-list-holder">
+    <mat-nav-list id="calculator-list">
+      <h3 mat-subheader>Calculator</h3>
+      <mat-list-item *ngFor="let calculator of calculators" [class.active]="calculator == $activeCalculator" (click)="$activeCalculator = calculator">
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <h4 mat-line>{{calculator}}</h4>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+      <h3 mat-subheader>Converter</h3>
+      <mat-list-item *ngFor="let converter of converters" [class.active]="converter == $activeCalculator" (click)="$activeCalculator = converter">
+        <mat-icon mat-list-icon>note</mat-icon>
+        <h4 mat-line>{{converter}}</h4>
+      </mat-list-item>
+    </mat-nav-list>
+  </div>
+  <div id="history-list-holder">
+    <mat-nav-list id="history-list">
+      <h3 mat-subheader class="history-header">History
+        <button mat-icon-button (click)="deleteHistory()">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </h3>
+      <mat-list-item *ngFor="let history of $history.slice().reverse()">
+        <mat-icon mat-list-icon>folder</mat-icon>
+        <div class="history-item-container">
+          <div class="history-calculator history-item-text-holder">
+            <span>{{history.calculator}}</span>
+          </div>
+          <div class="history-operation history-item-text-holder">
+            <span>{{history.operations}}</span>
+          </div>
+          <div class="history-result history-item-text-holder">
+            <span>{{history.result}}</span>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-list-item>
+    </mat-nav-list>
+  </div>
   <div id="physical-calculator">
     <div id="display-holder">
       <div class="display-row-1"><span class="display-text">{{$operation}}</span></div>
-      <div class="display-row-2"><span class="display-text" [textContent] = "$result"></span></div>
+      <div class="display-row-2"><span class="display-text" [textContent]="$result"></span></div>
     </div>
     <div id="buttons" class="reveal-button-group">
-      <div class="reveal-button-holder clearone"><button mat-button (click)="onKeyInput('CE')" class="reveal-button">CE</button></div>
+
       <div class="reveal-button-holder clear"><button mat-button (click)="onKeyInput('C')" class="reveal-button">C</button></div>
+      <div class="reveal-button-holder clearone"><button mat-button (click)="onNumInput('CE')" class="reveal-button">CE</button></div>
       <div class="reveal-button-holder negate"><button mat-button (click)="onNumInput('negate')" class="reveal-button">+/-</button></div>
-      <div class="reveal-button-holder delete"><button mat-button (click)="onKeyInput('backspace')" class="reveal-button"><mat-icon>backspace</mat-icon></button></div>
+      <div class="reveal-button-holder delete"><button mat-button (click)="onNumInput('backspace')" class="reveal-button">
+          <mat-icon>backspace</mat-icon>
+        </button></div>
       <div class="reveal-button-holder perc"><button mat-button (click)="onOperation('perc')" class="reveal-button">%</button></div>
       <div class="reveal-button-holder division"><button mat-button (click)="onOperation('div')" class="reveal-button">&#247;</button></div>
-      <div class="reveal-button-holder mul"><button mat-button (click)="onOperation('mul')" class="reveal-button"><mat-icon>clear</mat-icon></button></div>
-      <div class="reveal-button-holder minus"><button mat-button (click)="onOperation('minus')" class="reveal-button"><mat-icon>remove</mat-icon></button></div>
-      <div class="reveal-button-holder plus"><button mat-button (click)="onOperation('plus')" class="reveal-button"><mat-icon>add</mat-icon></button></div>
-      <div class="reveal-button-holder equals"><button mat-button (click)="onOperation('equals')" class="reveal-button"><mat-icon>drag_handle</mat-icon></button></div>
+      <div class="reveal-button-holder mul"><button mat-button (click)="onOperation('mul')" class="reveal-button">
+          <mat-icon>clear</mat-icon>
+        </button></div>
+      <div class="reveal-button-holder minus"><button mat-button (click)="onOperation('minus')" class="reveal-button">
+          <mat-icon>remove</mat-icon>
+        </button></div>
+      <div class="reveal-button-holder plus"><button mat-button (click)="onOperation('plus')" class="reveal-button">
+          <mat-icon>add</mat-icon>
+        </button></div>
+      <div class="reveal-button-holder equals"><button mat-button (click)="onOperation('equals')" class="reveal-button">
+          <mat-icon>drag_handle</mat-icon>
+        </button></div>
       <div class="reveal-button-holder one"><button mat-button (click)="onNumInput('1')" class="reveal-button numeric-button">1</button></div>
       <div class="reveal-button-holder two"><button mat-button (click)="onNumInput('2')" class="reveal-button numeric-button">2</button></div>
       <div class="reveal-button-holder three"><button mat-button (click)="onNumInput('3')" class="reveal-button numeric-button">3</button></div>
       <div class="reveal-button-holder four"><button mat-button (click)="onNumInput('4')" class="reveal-button numeric-button">4</button></div>
       <div class="reveal-button-holder five"><button mat-button (click)="onNumInput('5')" class="reveal-button numeric-button">5</button></div>
-      <div class="reveal-button-holder six"><button mat-button (click)="onNumInput('6')" class="reveal-button numeric-button">6</button> </div>
+      <div class="reveal-button-holder six"><button mat-button (click)="onNumInput('6')" class="reveal-button numeric-button">6</button>
+      </div>
       <div class="reveal-button-holder seven"><button mat-button (click)="onNumInput('7')" class="reveal-button numeric-button">7</button></div>
       <div class="reveal-button-holder eight"><button mat-button (click)="onNumInput('8')" class="reveal-button numeric-button">8</button></div>
       <div class="reveal-button-holder nine"><button mat-button (click)="onNumInput('9')" class="reveal-button numeric-button">9</button></div>

@@ -48,6 +48,7 @@ import { UsercommComponent } from './usercomm/usercomm.component'
 import { CalculatorComponent } from './calculator/calculator.component';
 import { TopbarComponent } from './topbar/topbar.component';
 import { RevealbuttoncontainerDirective } from './revealbuttoncontainer.directive';
+import { ReversePipe } from './reverse.pipe';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { RevealbuttoncontainerDirective } from './revealbuttoncontainer.directiv
     UsercommComponent,
     CalculatorComponent,
     TopbarComponent,
-    RevealbuttoncontainerDirective
+    RevealbuttoncontainerDirective,
+    ReversePipe
   ],
   imports: [
     CommonModule,
